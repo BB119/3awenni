@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">3awenni</string>
+    <string name="title_explore">Explore</string>
+    <string name="title_offers">My Offers</string>
+    <string name="title_account">My Account</string>
+
+    //Headings
+    <string name="heading_one">Help People When THEY Need It</string>
+    <string name="heading_two">Connect</string>
+    <string name="heading_three">Rate Each Other</string>
+
+    //Description
+    <string name="desc_one">Offer Your Services And Get Paid For Them</string>
+    <string name="desc_two">Meet New People And Build Something Great</string>
+    <string name="desc_three">Rate The Service You Have Been Offered</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment_1">Hello blank fragment 1</string>
+    <string name="hello_blank_fragment_2">Hello blank fragment 2</string>
+    <string name="hello_blank_fragment_3">Hello blank fragment 3</string>
+
+    <string name="next_button">Next</string>
+    <string name="tab_text_1">Login</string>
+    <string name="tab_text_2">Sign Up</string>
+
+    <string name="try_again_email">Please enter a valid email</string>
+    <string name="try_again_name">Please enter a name of more than 6 characters</string>
+    <string name="try_again_password">Please enter a password of more than 6 characters</string>
+    <string name="try_again_passwords">Your passwords don\'t match</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_email">Email</string>
+    <string name="loading_image_content_descrption">loading image</string>
+    <string name="forgot_password">Forgot Password?</string>
+
+    // Login and Signup Credentials error
+    <string name="wrong_login_cred_dialog_message">Please check your internet connection. Your email or password might be wrong.</string>
+    <string name="wrong_login_cred_dialog_title">Authentication Problem</string>
+    <string name="email_exists_dialog_message">A user with this email already signed up</string>
+    <string name="email_exists_dialog_title">Sign Up Problem</string>
+    <string name="pswd_reset_email_dialog_message">A password reset email has been sent to you.</string>
+    <string name="pswd_reset_email_dialog_title">Email Sent</string>
+
+    <string name="pswd_reset_prb_dialog_message">Please check your internet connection and verify
+        that the email is registered</string>
+    <string name="pswd_reset_prb_dialog_title">Email Could Not Be Sent</string>
+
+    //Facebook Login
+    <string name="facebook_app_id">1288145851634719</string>
+    <string name="fb_login_protocol_scheme">fb1288145851634719</string>
+    <string name="finish_button">Finish</string>
+
+</resources>

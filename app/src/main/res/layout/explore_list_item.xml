@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="35dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:cardCornerRadius="16dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_service_icon"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_margin="30dp"
+                android:elevation="35dp"
+                android:scaleType="center"
+                app:backgroundTint="@color/gray"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:maxImageSize="50dp"
+                app:tint="@null" />
+
+            <TextView
+                android:id="@+id/offer_title_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:fontFamily="@font/poppins_medium"
+                android:textAlignment="center"
+                android:textColor="@color/purple_700"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@id/fab_service_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/fab_service_icon"
+                app:layout_constraintTop_toTopOf="@id/fab_service_icon"
+                tools:text="Offer Title" />
+
+            <LinearLayout
+                android:id="@+id/status_linear_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fab_service_icon">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:backgroundTint="@null"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:src="@drawable/filled_circle" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    tools:text="Open" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/offer_content_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/poppins_light"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:maxLines="20"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/status_linear_layout"
+                tools:text="Offer Content" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
