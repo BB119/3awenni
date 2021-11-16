@@ -1,5 +1,7 @@
 package com.bbexcellence.a3awenni.adapters
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -33,7 +35,7 @@ fun bindFab(fab: FloatingActionButton, category: Category) {
 @BindingAdapter("status")
 fun bindLinearLayout(linearLayout: LinearLayout, status: OfferStatus) {
     val viewList = linearLayout.children.toList()
-    val imageView = viewList[0] as ImageView
+    val imageView = viewList[0] as FloatingActionButton
     val textView = viewList[1] as TextView
     var imgBgdColorId = R.color.green
 
@@ -50,6 +52,7 @@ fun bindLinearLayout(linearLayout: LinearLayout, status: OfferStatus) {
         OfferStatus.OPEN -> "Open"
     }
 
-    imageView.setBackgroundColor(imgBgdColorId)
+    //imageView.backgroundTintList = ColorStateList.valueOf(Color.rgb(255, 50, 50))
+    imageView.backgroundTintList = ColorStateList.valueOf(linearLayout.context.resources.getColor(imgBgdColorId))
     textView.text =statusText
 }

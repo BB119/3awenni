@@ -14,14 +14,14 @@
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.8"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_margin="16dp"
-            app:layout_constraintHeight_percent="0.8"
-            app:layout_constraintWidth_percent="0.8"
-            app:cardCornerRadius="16dp">
+            app:layout_constraintWidth_percent="0.8">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -67,13 +67,12 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fab_service_icon">
 
-                    <ImageView
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:layout_width="16dp"
                         android:layout_height="16dp"
+                        android:elevation="35dp"
                         android:layout_gravity="center"
-                        android:background="@null"
-                        android:backgroundTint="@null"
-                        android:src="@drawable/filled_circle" />
+                        app:backgroundTint="@color/purple_500" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -92,9 +91,9 @@
                     android:layout_marginTop="16dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/poppins_light"
-                    android:maxLines="14"
-                    android:textSize="16sp"
+                    android:maxLines="13"
                     android:padding="16dp"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
