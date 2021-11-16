@@ -50,7 +50,6 @@ class ExploreFragment : Fragment() {
         //_binding?.lifecycleOwner = this
         binding.exploreOffersRecyclerView.apply {
             adapter = ExploreListAdapter(Datasource().loadUserData())
-
         }
     }
 
