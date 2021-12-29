@@ -23,6 +23,7 @@
     <string name="tab_text_1">Login</string>
     <string name="tab_text_2">Sign Up</string>
 
+    // Sign Up and login error messages
     <string name="try_again_email">Please enter a valid email</string>
     <string name="try_again_name">Please enter a name of more than 6 characters</string>
     <string name="try_again_password">Please enter a password of more than 6 characters</string>
@@ -76,4 +77,11 @@
         <item>Bid Confirmed</item>
         <item>closed</item>
     </string-array>
+
+    // New offer fields error messages
+    <string name="try_again_offer_title">Please enter a title for your offer</string>
+    <string name="try_again_offer_content">Please enter the content of your offer</string>
+    <string name="try_again_offer_deadline">Please enter a deadline for your offer</string>
+    <string name="try_again_offer_category">Please enter the category of your offer</string>
+    <string name="try_again_offer_status">Please enter a status for your offer</string>
 </resources>

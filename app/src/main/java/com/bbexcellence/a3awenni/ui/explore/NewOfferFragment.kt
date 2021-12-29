@@ -1,35 +1,30 @@
 package com.bbexcellence.a3awenni.ui.explore
 
-import android.app.Activity
-import android.content.DialogInterface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.EditText
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.bbexcellence.a3awenni.R
-import com.bbexcellence.a3awenni.adapters.ExploreListAdapter
-import com.bbexcellence.a3awenni.databinding.FragmentExploreBinding
 import com.bbexcellence.a3awenni.databinding.FragmentNewOfferBinding
-import com.bbexcellence.a3awenni.login.*
+import com.bbexcellence.a3awenni.login.hideKeyboardWhenClickOutside
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputLayout
 
+private enum class NewOfferFields {
+    TITLE,
+    CONTENT,
+    DEADLINE,
+    CATEGORY,
+    STATUS
+}
 
-/**
- * A simple [Fragment] subclass.
- * Use the [NewOfferFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class NewOfferFragment : Fragment() {
 
     companion object {
@@ -40,6 +35,8 @@ class NewOfferFragment : Fragment() {
     private val sharedExploreViewModel: ExploreViewModel by activityViewModels()
     private var _binding: FragmentNewOfferBinding? = null
     var isNewOffer = false
+    var offerCategory = ""
+    var offerStatus = ""
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -81,18 +78,29 @@ class NewOfferFragment : Fragment() {
 
         // Create category drop-down menu
         val categoryItems = resources.getStringArray(R.array.offer_category_array)
-        val categoryAdapter = ArrayAdapter(requireContext(), R.layout.category_menu_list_item, categoryItems)
+        val categoryAdapter =
+            ArrayAdapter(requireContext(), R.layout.category_menu_list_item, categoryItems)
         binding.offerCategoryMenu.setAdapter(categoryAdapter)
 
         // Create status drop-down menu
         val statusItems = resources.getStringArray(R.array.offer_status_array)
-        val statusAdapter = ArrayAdapter(requireContext(), R.layout.category_menu_list_item, statusItems)
+        val statusAdapter =
+            ArrayAdapter(requireContext(), R.layout.category_menu_list_item, statusItems)
         binding.offerStatusMenu.setAdapter(statusAdapter)
     }
 
     fun createNewOffer() {
-        returnToPreviousScreen()
-        sharedExploreViewModel.createOffer()
+        if (checkInputValidity(binding.offerTitleEditText, binding.offerTitleTextInputLayout, NewOfferFields.TITLE) &&
+            checkInputValidity(binding.offerContentEditText, binding.offerContentTextInputLayout, NewOfferFields.CONTENT) &&
+            checkInputValidity(inputType = NewOfferFields.DEADLINE) &&
+            checkInputValidity(binding.offerCategoryMenu, binding.offerCategoryOuterMenu, NewOfferFields.CATEGORY) &&
+            (
+                    (!isNewOffer && checkInputValidity(binding.offerStatusMenu, binding.offerStatusOuterMenu, NewOfferFields.STATUS))
+                            || isNewOffer)
+        ) {
+            returnToPreviousScreen()
+            sharedExploreViewModel.createOffer()
+        }
     }
 
     private fun returnToPreviousScreen() {
@@ -120,5 +128,57 @@ class NewOfferFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    /**
+     * Check if text input is valid
+     */
+    private fun checkInputValidity(
+        inputEditText: EditText? = null,
+        inputLayout: TextInputLayout? = null,
+        inputType: NewOfferFields
+    ): Boolean {
+        val inputText = inputEditText?.text?.toString()?.trim() ?: binding.offerUserDeadlineTextView.text.toString().trim()
+        val isInputValid = inputText.isNotEmpty()
+        if (isInputValid) {
+            setErrorTextField(inputLayout, inputEditText, false, inputType)
+        } else {
+            setErrorTextField(inputLayout, inputEditText, true, inputType)
+        }
+
+        return isInputValid
+    }
+
+    /**
+     * Set or clear text field error
+     */
+    private fun setErrorTextField(
+        editTextLayout: TextInputLayout?,
+        inputEditText: EditText?,
+        error: Boolean,
+        fieldType: NewOfferFields
+    ) {
+        val errorMessageStringId = when (fieldType) {
+            NewOfferFields.TITLE -> R.string.try_again_offer_title
+            NewOfferFields.CONTENT -> R.string.try_again_offer_content
+            NewOfferFields.DEADLINE -> R.string.try_again_offer_deadline
+            NewOfferFields.CATEGORY -> R.string.try_again_offer_category
+            NewOfferFields.STATUS -> R.string.try_again_offer_status
+        }
+
+        if (error) {
+            editTextLayout?.isErrorEnabled = true
+            if (editTextLayout != null) {
+                editTextLayout.error = getString(errorMessageStringId)
+            } else {
+                binding.offerUserDeadlineTextView.error = getString(errorMessageStringId)
+            }
+            inputEditText?.text = null
+        } else {
+            editTextLayout?.isErrorEnabled = false
+            if (editTextLayout == null) {
+                binding.offerUserDeadlineTextView.error = null
+            }
+        }
     }
 }

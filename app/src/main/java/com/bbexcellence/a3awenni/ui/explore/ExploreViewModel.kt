@@ -44,6 +44,10 @@ class ExploreViewModel : ViewModel() {
         addOfferEventListener()
     }
 
+    fun clearDeadline() {
+        _deadline.value = ""
+    }
+
     fun getStatusVisibility(isOfferNew: Boolean): Int = if (isOfferNew) {
         View.GONE
     } else {

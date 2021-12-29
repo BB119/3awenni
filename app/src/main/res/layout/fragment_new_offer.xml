@@ -111,6 +111,7 @@
                 app:tint="@color/purple_500" />
 
             <TextView
+                android:id="@+id/offer_user_deadline_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -148,6 +149,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/black"
                     android:inputType="none"
+                    android:text="@{fragment.offerCategory}"
                     app:boxStrokeWidth="0dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -169,9 +171,9 @@
                 android:layout_marginVertical="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/edit_text_background"
+                android:visibility="@{viewModel.getStatusVisibility(fragment.isNewOffer)}"
                 app:boxStrokeWidth="0dp"
                 app:hintEnabled="false"
-                android:visibility="@{viewModel.getStatusVisibility(fragment.isNewOffer)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/offer_category_outer_menu"
                 app:layout_constraintTop_toBottomOf="@id/offer_category_outer_menu">
@@ -182,6 +184,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/black"
                     android:inputType="none"
+                    android:text="@{fragment.offerStatus}"
                     app:boxStrokeWidth="0dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
