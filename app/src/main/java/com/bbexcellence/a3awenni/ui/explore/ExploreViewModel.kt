@@ -40,6 +40,7 @@ class ExploreViewModel : ViewModel() {
         }
         database = Firebase.database
         _offersToExplore.value = arrayListOf()
+        Firebase.database.setPersistenceEnabled(true)
         addOfferEventListener()
     }
 
@@ -57,7 +58,7 @@ class ExploreViewModel : ViewModel() {
     }
 
     private fun addOfferEventListener() {
-        viewModelScope.launch {
+        //viewModelScope.launch {
             database!!.getReference("offers").addValueEventListener(object :
                 ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -71,7 +72,7 @@ class ExploreViewModel : ViewModel() {
                 override fun onCancelled(error: DatabaseError) {
                 }
             })
-        }
+        //}
     }
 
     override fun onCleared() {

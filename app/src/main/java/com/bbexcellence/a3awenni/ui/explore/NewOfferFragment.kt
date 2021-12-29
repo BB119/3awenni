@@ -20,9 +20,9 @@ import com.bbexcellence.a3awenni.R
 import com.bbexcellence.a3awenni.adapters.ExploreListAdapter
 import com.bbexcellence.a3awenni.databinding.FragmentExploreBinding
 import com.bbexcellence.a3awenni.databinding.FragmentNewOfferBinding
-import com.bbexcellence.a3awenni.login.displayAlert
-import com.bbexcellence.a3awenni.login.hideKeyboardWhenClickOutside
+import com.bbexcellence.a3awenni.login.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputLayout
 
 
 /**

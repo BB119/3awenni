@@ -70,7 +70,7 @@ class ExploreFragment : Fragment() {
      * Start a new offer fragment
      */
     fun startNewOfferFragment() {
-        val action = ExploreFragmentDirections.actionNavigationExploreToNewOfferFragment(isNew = false)
+        val action = ExploreFragmentDirections.actionNavigationExploreToNewOfferFragment(isNew = true)
         findNavController().navigate(action)
         //findNavController().navigate(R.id.action_navigation_explore_to_newOfferFragment)
     }
