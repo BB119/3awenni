@@ -4,19 +4,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-import com.bbexcellence.a3awenni.databinding.ExploreListItemBinding
-import com.bbexcellence.a3awenni.databinding.OfferListItemBinding
-import com.bbexcellence.a3awenni.models.Offer
-import android.widget.TableRow
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.bbexcellence.a3awenni.R
+import com.bbexcellence.a3awenni.models.Category
+import com.bbexcellence.a3awenni.models.Offer
+import com.bbexcellence.a3awenni.models.OfferStatus
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
-class ExploreListAdapter(private val dataSet: List<Offer>) :
+class ExploreListAdapter(private val dataSet: ArrayList<Offer>) :
     RecyclerView.Adapter<ExploreListAdapter.ViewHolder>() {
 
     /**
@@ -36,9 +33,6 @@ class ExploreListAdapter(private val dataSet: List<Offer>) :
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.explore_list_item, viewGroup, false)
 
-        val height: Int = viewGroup.measuredHeight
-        view.minimumHeight = height
-
         return ViewHolder(view)
     }
 
@@ -48,15 +42,12 @@ class ExploreListAdapter(private val dataSet: List<Offer>) :
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.titleTextView.text = currentOffer.title
-        bindFab(viewHolder.iconButton, currentOffer.category)
+        bindFab(viewHolder.iconButton, currentOffer.category ?: Category.VOLUNTEERING)
         viewHolder.contentTextView.text = currentOffer.content
-        bindLinearLayout(viewHolder.statusLinearLayout, currentOffer.status)
+        bindLinearLayout(viewHolder.statusLinearLayout, currentOffer.status ?: OfferStatus.OPEN)
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
 
 }
-
-
-

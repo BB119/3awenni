@@ -1,7 +1,11 @@
 package com.bbexcellence.a3awenni.login
 
+import android.app.Activity
+import android.content.Context
 import android.text.TextUtils
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -27,12 +31,13 @@ fun String.arePasswordsValid(secondPassword: String): Boolean {
 }
 
 fun Fragment.displayAlert(titleId: Int, messageId: Int) {
-    MaterialAlertDialogBuilder(requireContext())
-        .setTitle(titleId)
-        .setMessage(messageId)
-        .setCancelable(false)
-        .setPositiveButton(android.R.string.ok, null)
-        .show()
+    MaterialAlertDialogBuilder(requireContext()).apply {
+        setTitle(titleId)
+        setMessage(messageId)
+        setCancelable(false)
+        setPositiveButton(android.R.string.ok, null)
+        show()
+    }
 }
 
 fun Fragment.animateScreenWidgets(
@@ -93,4 +98,15 @@ fun AppCompatActivity.displayAlertAndFinishActivity(titleId: Int, messageId: Int
             this.finish()
         }
         .show()
+}
+
+/**
+ * Hide keyboard when user clicks outside edit text
+ */
+fun EditText.hideKeyboardWhenClickOutside(context: Context?) {
+    this.setOnFocusChangeListener { view, _ ->
+        val inputMethodManager =
+            context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
+        inputMethodManager?.hideSoftInputFromWindow(view.windowToken, 0)
+    }
 }

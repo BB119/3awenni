@@ -15,7 +15,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:clickable="true"
             android:focusable="true"
             android:focusableInTouchMode="true">
@@ -41,7 +41,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edit_text_background"
-                    android:hint="Name"
+                    android:hint="@string/hint_name"
                     android:inputType="textPersonName" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -67,7 +67,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edit_text_background"
-                    android:hint="Email"
+                    android:hint="@string/hint_email"
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,7 +94,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edit_text_background"
-                    android:hint="Password"
+                    android:hint="@string/hint_password"
                     android:inputType="textWebPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -121,7 +121,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edit_text_background"
-                    android:hint="Confirm Password"
+                    android:hint="@string/hint_confirm_password"
                     android:inputType="textWebPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -132,7 +132,7 @@
                 android:layout_marginVertical="30dp"
                 android:background="@drawable/button_background"
                 android:onClick="@{() -> signUpTabFragment.onSubmitCredentials()}"
-                android:text="Sign Up"
+                android:text="@string/sign_up_button_text"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"

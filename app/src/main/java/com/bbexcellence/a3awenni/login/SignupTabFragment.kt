@@ -56,17 +56,10 @@ class SignupTabFragment : Fragment() {
         _binding?.signUpTabFragment = this
 
         // Hide keyboard when user clicks outside the edit texts
-        hideKeyboardForClickOutside(_binding!!.signupNameEditText)
-        hideKeyboardForClickOutside(_binding!!.signupEmailEditText)
-        hideKeyboardForClickOutside(_binding!!.signupPasswordEditText)
-        hideKeyboardForClickOutside(_binding!!.signupConfPasswordEditText)
-    }
-
-    /*
-    Hides keyboard when the user clicks outside the edit text
-     */
-    private fun hideKeyboardForClickOutside(editText: EditText) {
-        editText.setOnFocusChangeListener { v, _ -> hideKeyboard(v) }
+        _binding!!.signupNameEditText.hideKeyboardWhenClickOutside(context)
+        _binding!!.signupEmailEditText.hideKeyboardWhenClickOutside(context)
+        _binding!!.signupPasswordEditText.hideKeyboardWhenClickOutside(context)
+        _binding!!.signupConfPasswordEditText.hideKeyboardWhenClickOutside(context)
     }
 
     /*
@@ -205,15 +198,6 @@ class SignupTabFragment : Fragment() {
         }
 
         return isInputValid
-    }
-
-    /*
-    Hides keyboard
-     */
-    private fun hideKeyboard(view: View) {
-        val inputMethodManager =
-            context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
-        inputMethodManager!!.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     /*

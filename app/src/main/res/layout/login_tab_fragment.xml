@@ -76,7 +76,7 @@
                 android:layout_marginVertical="40dp"
                 android:background="@drawable/button_background"
                 android:onClick="@{() -> loginTabFragment.onSubmitCredentials()}"
-                android:text="Login"
+                android:text="@string/login_button_text"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"

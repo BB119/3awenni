@@ -51,15 +51,8 @@ class LoginTabFragment : Fragment() {
         _binding?.loginTabFragment = this
 
         // Hide keyboard when user clicks outside the edit texts
-        hideKeyboardForClickOutside(_binding!!.loginEmailEditText)
-        hideKeyboardForClickOutside(_binding!!.loginPasswordEditText)
-    }
-
-    /*
-    Hides keyboard when the user clicks outside the edit text
-     */
-    private fun hideKeyboardForClickOutside(editText: EditText) {
-        editText.setOnFocusChangeListener { v, _ -> hideKeyboard(v) }
+        _binding!!.loginEmailEditText.hideKeyboardWhenClickOutside(context)
+        _binding!!.loginPasswordEditText.hideKeyboardWhenClickOutside(context)
     }
 
     override fun onDestroyView() {
@@ -145,15 +138,6 @@ class LoginTabFragment : Fragment() {
         }
 
         return isInputValid
-    }
-
-    /*
-    Hides keyboard
-     */
-    private fun hideKeyboard(view: View) {
-        val inputMethodManager =
-            context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
-        inputMethodManager!!.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     /*

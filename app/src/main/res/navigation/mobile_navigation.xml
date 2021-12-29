@@ -9,7 +9,11 @@
         android:id="@+id/navigation_explore"
         android:name="com.bbexcellence.a3awenni.ui.explore.ExploreFragment"
         android:label="@string/title_explore"
-        tools:layout="@layout/fragment_explore" />
+        tools:layout="@layout/fragment_explore">
+        <action
+            android:id="@+id/action_navigation_explore_to_newOfferFragment"
+            app:destination="@id/newOfferFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_offers"
@@ -22,4 +26,14 @@
         android:name="com.bbexcellence.a3awenni.ui.account.AccountFragment"
         android:label="@string/title_account"
         tools:layout="@layout/fragment_account" />
+    <fragment
+        android:id="@+id/newOfferFragment"
+        android:name="com.bbexcellence.a3awenni.ui.explore.NewOfferFragment"
+        android:label="NewOfferFragment"
+        tools:layout="@layout/fragment_new_offer" >
+        <argument
+            android:name="isNew"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
 </navigation>

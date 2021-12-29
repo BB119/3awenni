@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="fragment"
+            type="com.bbexcellence.a3awenni.ui.explore.ExploreFragment" />
+
+        <variable
             name="viewModel"
             type="com.bbexcellence.a3awenni.ui.explore.ExploreViewModel" />
     </data>
@@ -37,6 +41,7 @@
             android:layout_margin="16dp"
             android:backgroundTint="@color/purple_500"
             android:elevation="35dp"
+            android:onClick="@{() -> fragment.startNewOfferFragment()}"
             android:src="@drawable/ic_add_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

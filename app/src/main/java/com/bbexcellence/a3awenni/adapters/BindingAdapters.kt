@@ -54,5 +54,5 @@ fun bindLinearLayout(linearLayout: LinearLayout, status: OfferStatus) {
 
     //imageView.backgroundTintList = ColorStateList.valueOf(Color.rgb(255, 50, 50))
     imageView.backgroundTintList = ColorStateList.valueOf(linearLayout.context.resources.getColor(imgBgdColorId))
-    textView.text =statusText
+    textView.text = statusText
 }

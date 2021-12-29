@@ -5,23 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
 import com.bbexcellence.a3awenni.R
 import com.bbexcellence.a3awenni.adapters.ExploreListAdapter
-import com.bbexcellence.a3awenni.data.Datasource
 import com.bbexcellence.a3awenni.databinding.FragmentExploreBinding
-import com.bbexcellence.a3awenni.ui.CenterZoomLayoutManager
+import com.bbexcellence.a3awenni.models.Offer
 
 class ExploreFragment : Fragment() {
 
-    private val exploreViewModel: ExploreViewModel by viewModels()
+    //private val exploreViewModel: ExploreViewModel by viewModels()
     private var _binding: FragmentExploreBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private val sharedExploreViewModel: ExploreViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,11 +48,31 @@ class ExploreFragment : Fragment() {
         //Initialize layout data variables
         // Specify the fragment view as the lifecycle owner of the binding.
         // This is used so that the binding can observe LiveData updates
-        binding.viewModel = exploreViewModel
+        binding.viewModel = sharedExploreViewModel
+        binding.fragment = this
         //_binding?.lifecycleOwner = this
-        binding.exploreOffersRecyclerView.apply {
-            adapter = ExploreListAdapter(Datasource().loadUserData())
+
+        binding.exploreOffersRecyclerView.setHasFixedSize(true)
+        binding.exploreOffersRecyclerView.adapter =
+            ExploreListAdapter(sharedExploreViewModel.offersToExplore.value!!)
+
+        // Create the observer which updates the UI.
+        val offersObserver = Observer<ArrayList<Offer>> { _ ->
+            // Update the recycler view
+            binding.exploreOffersRecyclerView.adapter?.notifyDataSetChanged()
         }
+
+        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
+        sharedExploreViewModel.offersToExplore.observe(this, offersObserver)
+    }
+
+    /**
+     * Start a new offer fragment
+     */
+    fun startNewOfferFragment() {
+        val action = ExploreFragmentDirections.actionNavigationExploreToNewOfferFragment(isNew = false)
+        findNavController().navigate(action)
+        //findNavController().navigate(R.id.action_navigation_explore_to_newOfferFragment)
     }
 
     override fun onDestroyView() {
