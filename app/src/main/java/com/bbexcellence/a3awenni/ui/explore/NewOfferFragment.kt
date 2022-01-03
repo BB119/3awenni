@@ -21,6 +21,7 @@ private enum class NewOfferFields {
     CONTENT,
     DEADLINE,
     CATEGORY,
+    PRICE,
     STATUS
 }
 
@@ -35,8 +36,11 @@ class NewOfferFragment : Fragment() {
     private val sharedExploreViewModel: ExploreViewModel by activityViewModels()
     private var _binding: FragmentNewOfferBinding? = null
     var isNewOffer = false
-    var offerCategory = ""
+
     var offerStatus = ""
+    var offerCategory = ""
+    lateinit var categoryItems: Array<String>
+    lateinit var statusItems: Array<String>
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -77,29 +81,81 @@ class NewOfferFragment : Fragment() {
         binding.offerContentEditText.hideKeyboardWhenClickOutside(context)
 
         // Create category drop-down menu
-        val categoryItems = resources.getStringArray(R.array.offer_category_array)
+        categoryItems = arrayOf(
+            getString(R.string.category_business),
+            getString(R.string.category_healthcare),
+            getString(R.string.category_social),
+            getString(R.string.category_free)
+        )
         val categoryAdapter =
             ArrayAdapter(requireContext(), R.layout.category_menu_list_item, categoryItems)
         binding.offerCategoryMenu.setAdapter(categoryAdapter)
+        binding.offerCategoryMenu.setOnItemClickListener { _, _, position, _ ->
+            val selectedItem = categoryItems[position]
+            offerCategory = selectedItem
+            sharedExploreViewModel.isOfferFree.value =
+                (offerCategory == getString(R.string.category_free)) // selected item is "Free Service"
+        }
 
         // Create status drop-down menu
-        val statusItems = resources.getStringArray(R.array.offer_status_array)
+        statusItems = arrayOf(
+            getString(R.string.status_closed),
+            getString(R.string.status_confirmed),
+            getString(R.string.status_open)
+        )
         val statusAdapter =
             ArrayAdapter(requireContext(), R.layout.category_menu_list_item, statusItems)
         binding.offerStatusMenu.setAdapter(statusAdapter)
+        binding.offerStatusMenu.setOnItemClickListener { _, _, position, _ ->
+            val selectedItem = statusItems[position]
+            offerStatus = selectedItem
+        }
     }
 
     fun createNewOffer() {
-        if (checkInputValidity(binding.offerTitleEditText, binding.offerTitleTextInputLayout, NewOfferFields.TITLE) &&
-            checkInputValidity(binding.offerContentEditText, binding.offerContentTextInputLayout, NewOfferFields.CONTENT) &&
+        if (checkInputValidity(
+                binding.offerTitleEditText,
+                binding.offerTitleTextInputLayout,
+                NewOfferFields.TITLE
+            ) &&
+            checkInputValidity(
+                binding.offerContentEditText,
+                binding.offerContentTextInputLayout,
+                NewOfferFields.CONTENT
+            ) &&
             checkInputValidity(inputType = NewOfferFields.DEADLINE) &&
-            checkInputValidity(binding.offerCategoryMenu, binding.offerCategoryOuterMenu, NewOfferFields.CATEGORY) &&
-            (
-                    (!isNewOffer && checkInputValidity(binding.offerStatusMenu, binding.offerStatusOuterMenu, NewOfferFields.STATUS))
-                            || isNewOffer)
+            checkInputValidity(
+                binding.offerCategoryMenu,
+                binding.offerCategoryOuterMenu,
+                NewOfferFields.CATEGORY
+            ) &&
+            ((!isNewOffer && checkInputValidity(
+                binding.offerStatusMenu,
+                binding.offerStatusOuterMenu,
+                NewOfferFields.STATUS
+            ))
+                    || isNewOffer) &&
+            ((!sharedExploreViewModel.isOfferFree.value!! && checkInputValidity(
+                binding.offerPriceEditText,
+                binding.offerPriceTextInputLayout,
+                NewOfferFields.PRICE
+            ))
+                    || sharedExploreViewModel.isOfferFree.value!!)
         ) {
             returnToPreviousScreen()
-            sharedExploreViewModel.createOffer()
+
+            val enteredPriceString = binding.offerPriceEditText.text
+            var enteredPrice: Long = 0
+            if (!enteredPriceString.isNullOrEmpty()) {
+                enteredPrice = enteredPriceString.toString().toLong()
+            }
+            sharedExploreViewModel.createOffer(
+                binding.offerTitleEditText.text.toString(),
+                binding.offerContentEditText.text.toString(),
+                getString(R.string.status_open),
+                offerCategory,
+                enteredPrice
+            )
         }
     }
 
@@ -138,7 +194,8 @@ class NewOfferFragment : Fragment() {
         inputLayout: TextInputLayout? = null,
         inputType: NewOfferFields
     ): Boolean {
-        val inputText = inputEditText?.text?.toString()?.trim() ?: binding.offerUserDeadlineTextView.text.toString().trim()
+        val inputText = inputEditText?.text?.toString()?.trim()
+            ?: binding.offerUserDeadlineTextView.text.toString().trim()
         val isInputValid = inputText.isNotEmpty()
         if (isInputValid) {
             setErrorTextField(inputLayout, inputEditText, false, inputType)
@@ -163,6 +220,7 @@ class NewOfferFragment : Fragment() {
             NewOfferFields.CONTENT -> R.string.try_again_offer_content
             NewOfferFields.DEADLINE -> R.string.try_again_offer_deadline
             NewOfferFields.CATEGORY -> R.string.try_again_offer_category
+            NewOfferFields.PRICE -> R.string.try_again_offer_price
             NewOfferFields.STATUS -> R.string.try_again_offer_status
         }
 

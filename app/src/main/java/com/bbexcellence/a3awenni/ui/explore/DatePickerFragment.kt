@@ -38,6 +38,6 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
         calendar.set(Calendar.YEAR, year)
         calendar.set(Calendar.MONTH, month)
         calendar.set(Calendar.DAY_OF_MONTH, day)
-        sharedExploreViewModel.setDeadline(dateFormatter.format(calendar.time))
+        sharedExploreViewModel.setDeadline(calendar, dateFormatter.format(calendar.time))
     }
 }

@@ -70,8 +70,8 @@ class ExploreFragment : Fragment() {
      * Start a new offer fragment
      */
     fun startNewOfferFragment() {
-        //Clear any preexisting offer deadline
-        sharedExploreViewModel.clearDeadline()
+        //Clear any field variables from a previous offer
+        sharedExploreViewModel.clearPreviousOfferData()
         val action = ExploreFragmentDirections.actionNavigationExploreToNewOfferFragment(isNew = true)
         findNavController().navigate(action)
         //findNavController().navigate(R.id.action_navigation_explore_to_newOfferFragment)

@@ -64,24 +64,21 @@
     <string name="pick_date">Pick Offer Deadline</string>
 
     // Offer Categories
-    <string-array name="offer_category_array">
-        <item>Healthcare</item>
-        <item>Social</item>
-        <item>Business</item>
-        <item>Free Service</item>
-    </string-array>
+    <string name="category_healthcare">Healthcare</string>
+    <string name="category_social">Social</string>
+    <string name="category_business">Business</string>
+    <string name="category_free">Free Service</string>
 
     // Offer Status
-    <string-array name="offer_status_array">
-        <item>Open</item>
-        <item>Bid Confirmed</item>
-        <item>closed</item>
-    </string-array>
+    <string name="status_open">Open</string>
+    <string name="status_confirmed">Bid Confirmed</string>
+    <string name="status_closed">closed</string>
 
     // New offer fields error messages
     <string name="try_again_offer_title">Please enter a title for your offer</string>
     <string name="try_again_offer_content">Please enter the content of your offer</string>
     <string name="try_again_offer_deadline">Please enter a deadline for your offer</string>
     <string name="try_again_offer_category">Please enter the category of your offer</string>
+    <string name="try_again_offer_price">Please enter the price of your offer</string>
     <string name="try_again_offer_status">Please enter a status for your offer</string>
 </resources>

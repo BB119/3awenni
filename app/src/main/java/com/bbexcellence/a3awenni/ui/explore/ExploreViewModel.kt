@@ -5,24 +5,33 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bbexcellence.a3awenni.models.AppUser
-import com.bbexcellence.a3awenni.models.Offer
+import com.bbexcellence.a3awenni.models.*
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
+import com.google.firebase.database.DatabaseReference
+
+
+
 
 class ExploreViewModel : ViewModel() {
 
     var database: FirebaseDatabase?
-    private var _currentUser: AppUser?
+    private var currentUser: AppUser?
 
+    private var deadlineCalendar: Calendar? = null
     private val _deadline = MutableLiveData<String>()
     val deadline get() = _deadline
+
+    private val _offerCurrency = MutableLiveData<Currency>()
+    val offerCurrency get() = _offerCurrency
+
+    private val _isOfferFree = MutableLiveData<Boolean>()
+    val isOfferFree get() = _isOfferFree
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is home Fragment"
@@ -36,52 +45,66 @@ class ExploreViewModel : ViewModel() {
      */
     init {
         Firebase.auth.currentUser.let {
-            _currentUser = AppUser(it?.uid, it?.displayName)
+            currentUser = AppUser(it?.uid, it?.displayName)
         }
         database = Firebase.database
         _offersToExplore.value = arrayListOf()
+        _isOfferFree.value = false
         Firebase.database.setPersistenceEnabled(true)
         addOfferEventListener()
+        setCurrency(Currency.getInstance("USD")!!)
     }
 
-    fun clearDeadline() {
+    fun clearPreviousOfferData() {
         _deadline.value = ""
+        deadlineCalendar = null
     }
 
-    fun getStatusVisibility(isOfferNew: Boolean): Int = if (isOfferNew) {
+    fun setCurrency(currency: Currency) {
+        _offerCurrency.value = currency
+    }
+
+    fun checkVisibility(conditionVariable: Boolean): Int = if (conditionVariable) {
         View.GONE
     } else {
         View.VISIBLE
     }
 
-    fun setDeadline(dateString: String) {
+    fun setDeadline(calendar: Calendar, dateString: String) {
         _deadline.value = dateString
+        deadlineCalendar = calendar
     }
 
-    fun createOffer() {
+    fun createOffer(title: String, content: String, status: String, category: String, price: Long) {
+        val dbRef = database!!.reference.child("offers")
+
+        val key = dbRef.push().key!! // Adding offer entry with a random key
+        val offer = Offer(key, currentUser, title, content, price,
+            0, deadlineCalendar?.timeInMillis, 0, status, category)
+
+        dbRef.child("$key/creationTime").setValue(ServerValue.TIMESTAMP)
+        dbRef.child(key).setValue(offer)
     }
 
     private fun addOfferEventListener() {
-        //viewModelScope.launch {
-            database!!.getReference("offers").addValueEventListener(object :
-                ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for (dataSnapshot in snapshot.children) {
-                        val newOffer = dataSnapshot.getValue(Offer::class.java)!!
-                        _offersToExplore.value?.add(newOffer)
-                        _offersToExplore.value = _offersToExplore.value // To notify the observer
-                    }
+        database!!.reference.child("offers").addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                _offersToExplore.value?.clear() // clear offers to load them again
+                for (dataSnapshot in snapshot.children) {
+                    val offer: Offer = dataSnapshot.getValue(Offer::class.java)!!
+                    _offersToExplore.value?.add(offer)
+                    _offersToExplore.value = _offersToExplore.value // To notify the observer
                 }
+            }
 
-                override fun onCancelled(error: DatabaseError) {
-                }
-            })
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
         //}
     }
 
     override fun onCleared() {
         super.onCleared()
         database = null
-        _currentUser = null
     }
 }

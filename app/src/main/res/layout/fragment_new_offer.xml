@@ -149,16 +149,61 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/black"
                     android:inputType="none"
-                    android:text="@{fragment.offerCategory}"
                     app:boxStrokeWidth="0dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
+                android:id="@+id/offer_price_text_view"
+                style="@style/Base.Widget.AppCompat.TextView.newOrder"
+                android:animateLayoutChanges="true"
+                android:text="Price:"
+                android:visibility="@{viewModel.checkVisibility(viewModel.isOfferFree)}"
+                app:layout_constraintBottom_toBottomOf="@id/offer_price_text_input_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/offer_price_text_input_layout" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/offer_price_text_input_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
+                android:paddingStart="0dp"
+                android:visibility="@{viewModel.checkVisibility(viewModel.isOfferFree)}"
+                app:hintEnabled="false"
+                app:layout_constraintEnd_toStartOf="@id/offer_currency_text_view"
+                app:layout_constraintStart_toStartOf="@id/offer_category_outer_menu"
+                app:layout_constraintTop_toBottomOf="@id/offer_category_outer_menu">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/offer_price_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:background="@drawable/edit_text_background"
+                    android:hint="000"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/offer_currency_text_view"
+                style="@style/Base.Widget.AppCompat.TextView.newOrder"
+                android:animateLayoutChanges="true"
+                android:layout_marginHorizontal="16dp"
+                android:text="@{viewModel.offerCurrency.getCurrencyCode}"
+                android:textColor="#808080"
+                android:visibility="@{viewModel.checkVisibility(viewModel.isOfferFree)}"
+                app:layout_constraintBottom_toBottomOf="@id/offer_price_text_input_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/offer_price_text_input_layout"
+                tools:text="USD" />
+
+            <TextView
                 android:id="@+id/offer_status_text_view"
                 style="@style/Base.Widget.AppCompat.TextView.newOrder"
                 android:text="Status:"
-                android:visibility="@{viewModel.getStatusVisibility(fragment.isNewOffer)}"
+                android:visibility="@{viewModel.checkVisibility(fragment.isNewOffer)}"
                 app:layout_constraintBottom_toBottomOf="@id/offer_status_outer_menu"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/offer_status_outer_menu" />
@@ -171,12 +216,12 @@
                 android:layout_marginVertical="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/edit_text_background"
-                android:visibility="@{viewModel.getStatusVisibility(fragment.isNewOffer)}"
+                android:visibility="@{viewModel.checkVisibility(fragment.isNewOffer)}"
                 app:boxStrokeWidth="0dp"
                 app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/offer_category_outer_menu"
-                app:layout_constraintTop_toBottomOf="@id/offer_category_outer_menu">
+                app:layout_constraintTop_toBottomOf="@id/offer_price_text_input_layout">
 
                 <AutoCompleteTextView
                     android:id="@+id/offer_status_menu"
@@ -184,7 +229,6 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/black"
                     android:inputType="none"
-                    android:text="@{fragment.offerStatus}"
                     app:boxStrokeWidth="0dp" />
 
             </com.google.android.material.textfield.TextInputLayout>

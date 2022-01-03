@@ -7,9 +7,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bbexcellence.a3awenni.R
-import com.bbexcellence.a3awenni.models.Category
 import com.bbexcellence.a3awenni.models.Offer
-import com.bbexcellence.a3awenni.models.OfferStatus
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
@@ -42,9 +40,10 @@ class ExploreListAdapter(private val dataSet: ArrayList<Offer>) :
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.titleTextView.text = currentOffer.title
-        bindFab(viewHolder.iconButton, currentOffer.category ?: Category.VOLUNTEERING)
+        bindFab(viewHolder.iconButton, currentOffer.category!!)
         viewHolder.contentTextView.text = currentOffer.content
-        bindLinearLayout(viewHolder.statusLinearLayout, currentOffer.status ?: OfferStatus.OPEN)
+        bindLinearLayout(viewHolder.statusLinearLayout, currentOffer.status!!)
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)
